@@ -2,16 +2,17 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 #[tauri::command()]
+
 fn run_rgn(seed: u64, k: u64, g: u64) -> Vec<f64> {
     let m: u64 = 2u64.pow(g as u32);
     let a: u64 = 5 + 8 * k;
     let mut xi: u64 = seed;
     let mut ri: Vec<f64> = Vec::new();
     for _i in 1..m / 4 {
-        ri.push((xi / (m - 1)) as f64);
-        xi = (a * xi) % (m);
+        ri.push(xi as f64 / (m - 1) as f64);
+        xi = (a * xi) % m;
     }
-    ri.push((xi / (m - 1)) as f64);
+    ri.push(xi as f64 / (m - 1) as f64);
     ri
 }
 
